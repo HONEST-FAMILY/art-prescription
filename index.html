@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f5f4f0">
+<meta name="robots" content="noindex">
+<title>예술 처방 — 홈페이지를 읽고 그 회사의 예술을 고릅니다</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2314141a'/%3E%3Cpath d='M9 22 L16 9 L23 22' fill='none' stroke='%23f5f4f0' stroke-width='2.4' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="board.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <span class="mark">예술 처방</span>
+    <span class="tag">라이브러리 「인터랙티브 웹 개발자」 시험</span>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <h1><span class="ln"><span>홈페이지를 읽고,</span></span><span class="ln"><span>그 회사의 예술을 고릅니다</span></span></h1>
+    <p class="lead">같은 효과를 매번 넣지 않습니다. 홈페이지에서 그 회사만의 재료(만지는 물성·손동작·이야기)를 뽑고, 처방표의 예술 <b data-count>29</b>가지 가운데 맞는 것을 골라 손에 반응하게 만듭니다. 아래는 라이브러리 지식만 받은 작업자가 <b>홈페이지 주소 하나만 보고</b> 처방한 결과입니다.</p>
+    <ol class="steps">
+      <li><i>01</i><b>홈페이지 실측</b><span>업종·물성·공정·연혁·숫자·실사진</span></li>
+      <li><i>02</i><b>재료 3개</b><span>물성 1 · 손동작 1 · 이야기 1, 근거 문장 그대로</span></li>
+      <li><i>03</i><b>예술 후보 3개</b><span>원리가 같은 실제 작품·기법</span></li>
+      <li><i>04</i><b>한 줄 처방</b><span>“우리 얘기네”가 나와야 통과</span></li>
+      <li><i>05</i><b>손에 반응하게</b><span>처방이 정해진 뒤에 구현 기법</span></li>
+    </ol>
+  </section>
+
+  <section class="cases wrap" data-cases aria-label="처방 사례"></section>
+
+  <section class="catalog wrap" aria-labelledby="cat-h">
+    <div class="cat-head">
+      <h2 id="cat-h">처방표 — 고를 수 있는 예술</h2>
+      <p>손짓으로 골라 보세요. 라이브러리에 같은 표가 들어 있고, 회사 재료와 원리가 같은 것만 처방합니다.</p>
+    </div>
+    <div class="chips" data-chips role="group" aria-label="손짓으로 거르기"></div>
+    <div class="cat-grid" data-catalog></div>
+  </section>
+</main>
+
+<footer class="foot wrap">
+  <p>어니스트패밀리 내부 시험 페이지입니다. 각 회사 이름·사진은 우리 거래처 홈페이지에서 가져왔고, 시제품은 제안용 샘플이며 실제 사이트에 반영된 것이 아닙니다.</p>
+</footer>
+
+<script src="board.js"></script>
+</body>
+</html>

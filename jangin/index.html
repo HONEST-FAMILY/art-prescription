@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2a2116">
+<title>장인의상패 — 예술 처방 시제품</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23c9a25a'/%3E%3Cpath d='M6 25 L26 7' stroke='%23261b0c' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--ink:#1d1609;--red:#ff3e3e;--m:18px;--pad:22px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#2a2116;overscroll-behavior:none}
+body{font-family:"Pretendard Variable",Pretendard,system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+#stage{position:fixed;left:0;top:0;width:100%;height:100svh;touch-action:none;background:linear-gradient(160deg,#e3c47f,#b88b44 55%,#87622b);overflow:hidden}
+#stage canvas{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+#guide,#fx{pointer-events:none}
+.nogl #hmap{mix-blend-mode:multiply;opacity:.85}
+.fine #stage{cursor:none}
+.top{position:fixed;left:calc(var(--m) + var(--pad));top:calc(var(--m) + 16px);display:flex;align-items:center;gap:12px;pointer-events:none;z-index:3}
+.logo{height:34px;width:auto;display:block}
+.tag{font-size:12px;font-weight:700;letter-spacing:.02em;background:var(--red);color:#fff;padding:5px 8px 4px;line-height:1}
+.hint{position:fixed;left:0;right:0;text-align:center;font-size:13px;font-weight:600;letter-spacing:.04em;color:rgba(29,22,9,.62);pointer-events:none;z-index:2;transition:opacity .6s}
+.hint.gone{animation:none;opacity:0}
+.pc-only{display:inline}
+.bottom{position:fixed;left:calc(var(--m) + var(--pad));right:calc(var(--m) + var(--pad));bottom:calc(var(--m) + 16px);display:flex;align-items:flex-end;justify-content:space-between;gap:24px;z-index:3;pointer-events:none}
+.rx-line{max-width:620px;font-size:15px;line-height:1.55;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.rx-line b{font-weight:800}
+.tools{display:flex;align-items:center;gap:10px;pointer-events:auto;flex-shrink:0}
+.metals{display:flex;border:1px solid rgba(29,22,9,.55)}
+.metals button,.btn{font:inherit;font-size:13px;font-weight:700;color:var(--ink);background:transparent;border:0;height:34px;min-width:34px;padding:0 10px;cursor:pointer}
+.metals button+button{border-left:1px solid rgba(29,22,9,.55)}
+.metals button.on{background:var(--ink);color:#f3dda6}
+.btn{border:1px solid rgba(29,22,9,.55)}
+#open{background:var(--ink);color:#f3dda6;border-color:var(--ink);padding:0 16px;height:40px;font-size:14px;will-change:transform}
+#open span{display:inline-block;will-change:transform}
+.lift{display:inline-block;overflow:hidden;vertical-align:bottom}
+.lift>span{display:inline-block;transform:translateY(105%);animation:up 1.1s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes up{to{transform:none}}
+.fade{opacity:0;animation:fade .9s ease forwards}
+@keyframes fade{to{opacity:1}}
+#sheet{position:fixed;top:0;right:0;height:100%;width:min(440px,100%);background:#fff;color:#111;z-index:10;transform:translateX(102%);transition:transform .55s cubic-bezier(.16,1,.3,1);overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;box-shadow:-1px 0 0 rgba(0,0,0,.12)}
+#sheet.open{transform:none}
+.sh{padding:22px 24px 40px;user-select:text;-webkit-user-select:text}
+.sh-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.sh-head h2{font-size:20px;font-weight:800;letter-spacing:-.02em}
+#close{font:inherit;font-size:14px;font-weight:700;background:none;border:1px solid #111;height:34px;padding:0 12px;cursor:pointer;color:#111}
+.sh h3{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--red);margin:22px 0 10px}
+.mat{border-top:1px solid #e4e4e4;padding:12px 0}
+.mat .k{display:inline-block;font-size:11px;font-weight:800;border:1px solid #111;padding:2px 5px;margin-right:6px;vertical-align:1px}
+.mat .t{font-size:15px;font-weight:700;line-height:1.5}
+.mat q{display:block;margin-top:6px;font-size:13px;line-height:1.6;color:#555;quotes:"“" "”"}
+.mat small,.cap{display:block;font-size:11.5px;color:#909090;margin-top:4px;line-height:1.5}
+.ph{width:100%;display:block;margin-top:8px}
+.art{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:start}
+.art img{width:120px;display:block;border:1px solid #e4e4e4}
+.art p{font-size:13.5px;line-height:1.65;color:#222}
+.art strong{display:block;font-size:15px;font-weight:800;margin-bottom:6px;line-height:1.45}
+.alt{font-size:12.5px;line-height:1.6;color:#666;margin-top:10px}
+.gest{list-style:none}
+.gest li{display:grid;grid-template-columns:78px 1fr;gap:10px;font-size:13.5px;line-height:1.55;padding:8px 0;border-top:1px solid #eee}
+.gest li b{font-weight:800}
+.note{font-size:12.5px;line-height:1.65;color:#444;background:#f7f7f7;padding:12px 14px;margin-top:14px}
+.live{font-size:12px;color:#777;margin-top:14px;font-variant-numeric:tabular-nums}
+#cursor{position:fixed;left:0;top:0;pointer-events:none;z-index:20;display:none}
+.fine #cursor{display:block}
+#cursor i{position:absolute;width:6px;height:6px;margin:-3px 0 0 -3px;background:var(--ink);border-radius:50%}
+#cursor b{position:absolute;width:38px;height:38px;margin:-19px 0 0 -19px;border:1.5px solid rgba(29,22,9,.7);border-radius:50%;transition:width .25s,height .25s,margin .25s,opacity .25s}
+#cursor em{position:absolute;left:46px;top:-8px;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--ink);white-space:nowrap}
+#cursor.cut b{width:14px;height:14px;margin:-7px 0 0 -7px}
+#cursor.ui b{opacity:0}
+#cursor.ui em{opacity:0}
+@media (max-width:760px){
+  :root{--m:12px;--pad:12px}
+  .logo{height:26px}
+  .tag{font-size:11px;padding:4px 6px 3px}
+  .bottom{flex-direction:column;align-items:stretch;gap:12px;bottom:calc(var(--m) + 12px)}
+  .rx-line{font-size:13px;line-height:1.5}
+  .pc-only{display:none}
+  .hint{font-size:12.5px}
+  .tools{justify-content:space-between}
+  #open{height:38px}
+  .metals button,.btn{height:34px}
+  #sheet{top:auto;bottom:0;height:auto;max-height:84svh;width:100%;transform:translateY(102%);box-shadow:0 -1px 0 rgba(0,0,0,.12)}
+  #sheet.open{transform:none}
+  .sh{padding:18px 18px 34px}
+  .art{grid-template-columns:96px 1fr}
+  .art img{width:96px}
+}
+@media (prefers-reduced-motion:reduce){.lift>span,.fade{animation-duration:.01s}}
+</style>
+</head>
+<body>
+<div id="stage" aria-label="새길 수 있는 금판">
+  <canvas id="gl"></canvas>
+  <canvas id="guide"></canvas>
+  <canvas id="fx"></canvas>
+</div>
+<header class="top">
+  <img src="img/logo.png" alt="장인의상패" class="logo fade" style="animation-delay:.15s">
+  <span class="tag fade" style="animation-delay:.35s">예술 처방 시제품</span>
+</header>
+<p class="hint fade" id="hint" style="animation-delay:1.3s">금판을 긁어 보세요<span class="pc-only"> — 천천히 누르면 깊게, 빠르게 그으면 가늘게</span></p>
+<footer class="bottom">
+  <p class="rx-line"><span class="lift"><span style="animation-delay:.45s"><b>장인의상패는 평생 상패를 조각해 온 장인의 손입니다.</b></span></span> <span class="lift"><span style="animation-delay:.6s">뒤러의 동판화(1514)처럼, 금판을 긁으면 홈이 파여 빛을 받고 깎인 금속이 말려 떨어집니다.</span></span></p>
+  <div class="tools fade" style="animation-delay:.8s">
+    <div class="metals" role="group" aria-label="판 색">
+      <button type="button" data-m="gold" class="on" aria-pressed="true">금</button><button type="button" data-m="silver" aria-pressed="false">은</button><button type="button" data-m="bronze" aria-pressed="false">동</button>
+    </div>
+    <button type="button" class="btn" id="fresh">새 판</button>
+    <button type="button" id="open" aria-controls="sheet" aria-expanded="false"><span>처방전</span></button>
+  </div>
+</footer>
+<aside id="sheet" aria-hidden="true" aria-label="처방전">
+  <div class="sh">
+    <div class="sh-head"><h2>처방전 · 장인의상패</h2><button type="button" id="close">닫기</button></div>
+    <h3>① 재료 — 홈페이지에 있는 그대로</h3>
+    <div class="mat"><p class="t"><span class="k">물성</span>글자를 새기는 금속판, 금·은·동 세 빛깔</p><q>금색/은색/동색 선택 필수 · 재질: 크리스탈, 메탈</q><small>BK 0146 블랙 크리스탈 상패 상세 (최근 1년간 325건 구매)</small></div>
+    <div class="mat"><p class="t"><span class="k">과정</span>평생 상패를 조각해 온 장인의 손</p><q>장인의상패는 평생 상패와 트로피를 조각한 장인이 직접 연구하고 개발하는 브랜드입니다.</q><img class="ph" src="img/wondo.jpg" alt="공방 선반과 격자 종이에 손으로 그린 한글·한자 글자 원도" width="845" height="190" loading="lazy"><span class="cap">홈페이지 상품 상세 이미지 속 공방과 손으로 그린 글자 원도 (고객 자료)</span></div>
+    <div class="mat"><p class="t"><span class="k">이야기·숫자</span>고객이 가장 많이 새기는 한 문장</p><q>귀하께서는 지난 한 해 동안 보여준 남다른 노고와 헌신을 치하하기 위해 OOO의 전 임직원의 깊은 감사의 마음을 이 패에 담아드립니다.</q><small>문구추천 ‘가장 많이 사용하는 베스트 문구’ · “1,156여 곳의 기업·기관이 선택한” (2025년 5월 N스토어 기준)</small></div>
+    <h3>② 고른 예술</h3>
+    <div class="art"><img src="img/durer-melencolia.jpg" alt="알브레히트 뒤러, 멜랑콜리아 I, 1514, 동판화" width="420" height="534" loading="lazy"><div><strong>동판 인그레이빙 — 알브레히트 뒤러 「멜랑콜리아 I」 1514</strong><p>금세공사의 아들 뒤러는 그림보다 먼저 금속에 선을 새기는 법을 배웠습니다. 조각칼(뷰랭)로 동판에 V자 홈을 파, 선의 굵기만으로 빛과 그림자를 만든 판화입니다. 금속판에 글자를 새기는 장인의 손과 같은 동작입니다.</p><span class="cap">인쇄본 스캔 · 위키미디어 커먼즈 · 공개 도메인</span></div></div>
+    <p class="alt">함께 본 후보: 탁본·프로타주(막스 에른스트, 1925 — 문지르기), 나전 자개 모자이크(고려 나전칠기 — 비추기). 탁본은 새긴 글을 ‘읽는’ 손짓이고 자개는 명패 한 품목의 재료라, 모든 상패·트로피에 공통인 ‘새기는 손’을 골랐습니다.</p>
+    <h3>③ 손짓</h3>
+    <ul class="gest">
+      <li><b>스치면</b><span>손끝이 비스듬한 조명이 되어 판의 결과 새긴 홈이 번쩍입니다</span></li>
+      <li><b>누르면</b><span>조각칼이 박혀 점이 파이고, 오래 누를수록 넓고 깊어집니다</span></li>
+      <li><b>끌면</b><span>V자 홈이 새겨지고 깎인 금속이 말려 튑니다. 천천히는 굵고 깊게, 빠르게는 가늘게</span></li>
+      <li><b>세게 그으면</b><span>실처럼 가는 선, 멀리 튀는 부스러기, 판이 살짝 떨립니다</span></li>
+      <li><b>놓으면</b><span>선 끝이 가늘게 빠지고, 새 홈을 따라 빛이 한 번 훑고 지나갑니다</span></li>
+      <li><b>가만히 두면</b><span>장인의 손이 ‘감사패’ 글자를 빗금으로 채워 새깁니다</span></li>
+      <li><b>폰에서는</b><span>기울이면 조명이 움직여 새긴 글자가 빛을 받습니다</span></li>
+    </ul>
+    <p class="note">한 번 새긴 선은 지울 수 없습니다. 장인의상패도 “상패 제작 후에는 수정이 불가하니 시안을 신중히 확인해주세요”라고 안내합니다. 다시 하려면 ‘새 판’을 누르세요.</p>
+    <p class="live" id="live"></p>
+  </div>
+</aside>
+<div id="cursor" aria-hidden="true"><i></i><b></b><em>새기기</em></div>
+<script src="main.js"></script>
+</body>
+</html>

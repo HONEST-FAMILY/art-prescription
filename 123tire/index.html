@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>123타이어 · 예술 처방 시제품 — 프로타주</title>
+<meta name="description" content="123타이어 예술 처방 시제품 — 막스 에른스트의 프로타주처럼 종이를 문지르면 타이어 옆면의 사이즈와 생산 주차가 떠오릅니다.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2300443D'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--g9:#00443D;--g7:#00574A;--g5:#00876E;--ink:#202020;--tint:rgba(0,68,61,.08);--line:rgba(0,68,61,.2);--pad:28px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#fff;color:var(--ink);font-family:"Pretendard Variable",Pretendard,system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+body{height:100svh;position:relative;overscroll-behavior:none;user-select:none;-webkit-user-select:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;outline:none}
+.fine #scene,.fine .open,.fine #fresh{cursor:none}
+#leaders{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible}
+#leaders line{stroke:var(--g5);stroke-width:1.2;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);transition:stroke-dashoffset .7s cubic-bezier(.16,1,.3,1)}
+#leaders circle{fill:#fff;stroke:var(--g5);stroke-width:1.5;opacity:0;transition:opacity .3s}
+#leaders g.show line{stroke-dashoffset:0}
+#leaders g.show circle{opacity:1}
+#notes{position:fixed;inset:0;pointer-events:none;z-index:3}
+.note{position:absolute;left:0;top:0;width:250px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--g5);padding:10px 12px 11px;box-shadow:0 10px 28px rgba(0,40,34,.10);opacity:0;transform:translate(var(--x),var(--y)) scale(.92);transform-origin:var(--ox,0) 50%;transition:opacity .35s ease,transform .7s cubic-bezier(.34,1.56,.64,1)}
+.note.show{opacity:1;transform:translate(var(--x),var(--y)) scale(1)}
+.note h4{font-size:17px;font-weight:800;color:var(--g9);letter-spacing:.01em;font-variant-numeric:tabular-nums}
+.note h4 i{font-style:normal;font-size:11px;font-weight:700;color:var(--g5);margin-left:6px;vertical-align:2px}
+.note p{font-size:13px;line-height:1.5;color:#333;margin-top:3px;word-break:keep-all}
+.note small{display:block;margin-top:6px;font-size:11.5px;font-weight:700;color:var(--g5);word-break:keep-all}
+.top{position:fixed;left:0;right:0;top:0;z-index:4;display:flex;justify-content:space-between;align-items:center;padding:22px var(--pad) 0;pointer-events:none}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand img{height:21px;width:auto;display:block}
+.brand .name{font-weight:700;font-size:14px;color:var(--g9);white-space:nowrap}
+.tag{font-size:12px;font-weight:600;color:var(--g7);background:var(--tint);border:1px solid var(--line);padding:3px 9px;border-radius:999px;white-space:nowrap}
+.meter{display:flex;align-items:baseline;gap:5px;font-size:12.5px;color:#5b6664;white-space:nowrap}
+.meter b{font-size:24px;font-weight:800;color:var(--g9);font-variant-numeric:tabular-nums;min-width:2.2ch;text-align:right;letter-spacing:-.02em}
+.meter .u{font-weight:700;color:var(--g9)}
+.bottom{position:fixed;left:0;right:0;bottom:0;z-index:4;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:0 var(--pad) calc(24px + env(safe-area-inset-bottom));pointer-events:none}
+.rx{max-width:540px;font-size:16.5px;line-height:1.6;font-weight:600;color:#1f2b29;word-break:keep-all}
+.rx em{font-style:normal;color:var(--g7);font-weight:800}
+.rx .w{display:inline-block;overflow:hidden;vertical-align:top}
+.rx .w>span{display:inline-block;transform:translateY(110%);transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.on .rx .w>span{transform:none}
+.btns{display:flex;gap:10px;pointer-events:auto;flex:none}
+.open,#fresh{position:relative;height:46px;border-radius:999px;font-weight:700;font-size:15px;display:inline-flex;align-items:center;justify-content:center;will-change:transform}
+.open{padding:0 24px;background:var(--g7);color:#fff;box-shadow:0 8px 22px rgba(0,68,61,.22)}
+#fresh{padding:0 18px;background:#fff;color:var(--g7);border:1px solid var(--line)}
+.open span,#fresh span{display:inline-block;will-change:transform}
+.fade{opacity:0;transform:translateY(8px);transition:opacity .8s ease,transform 1s cubic-bezier(.16,1,.3,1)}
+.on .fade{opacity:1;transform:none}
+.hint{position:fixed;left:0;top:0;z-index:4;pointer-events:none;font-size:13px;font-weight:700;color:var(--g7);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px;white-space:nowrap;opacity:0;transform:translate(-50%,-50%) translate(var(--x),var(--y));transition:opacity .5s ease}
+.hint.show{opacity:1}
+.hint::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--g5);margin-right:7px;vertical-align:1px;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.6);opacity:.4}}
+#ghost{position:fixed;left:0;top:0;z-index:4;pointer-events:none;background:#0c362f;border-radius:3px;opacity:0;transition:opacity .25s}
+#cursor{position:fixed;left:0;top:0;z-index:60;pointer-events:none;display:none}
+.fine #cursor{display:block}
+#cursor .ring{position:absolute;left:0;top:0;border:1.5px solid var(--g7);border-radius:4px;transition:border-radius .25s,background-color .2s,opacity .2s}
+#cursor.down .ring{background:rgba(0,68,61,.14)}
+#cursor.btn .ring{border-radius:50%}
+#cursor .dot{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:var(--g9)}
+#cursor .lab{position:absolute;left:16px;top:14px;font-style:normal;font-size:12px;font-weight:700;color:var(--g7);white-space:nowrap;background:rgba(255,255,255,.85);padding:1px 5px;border-radius:4px}
+#cursor.off{opacity:0}
+.scrim{position:fixed;inset:0;z-index:20;background:rgba(0,30,26,.18);opacity:0;pointer-events:none;transition:opacity .4s}
+.sheet{position:fixed;z-index:21;top:0;right:0;height:100%;width:min(440px,92vw);background:#fff;border-left:1px solid var(--line);box-shadow:-18px 0 50px rgba(0,40,34,.12);transform:translateX(104%);transition:transform .6s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column}
+.sheet-open .scrim{opacity:1;pointer-events:auto}
+.sheet-open .sheet{transform:none}
+.sh-head{display:flex;align-items:center;justify-content:space-between;padding:22px 24px 14px;border-bottom:1px solid var(--line)}
+.sh-head h2{font-size:22px;font-weight:800;color:var(--g9)}
+.sh-head h2 small{font-size:12px;font-weight:600;color:#6b7674;margin-left:8px}
+#close{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);font-size:22px;line-height:1;color:var(--g7)}
+.sh-body{overflow-y:auto;overscroll-behavior:contain;padding:6px 24px 32px;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+.sh-body section{padding:18px 0;border-bottom:1px solid rgba(0,68,61,.1)}
+.sh-body section:last-child{border-bottom:0}
+.sh-body h3{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--g5);margin-bottom:10px}
+.mats{list-style:none;display:grid;gap:14px;counter-reset:m}
+.mats li{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:start}
+.mats .kind{grid-column:1/-1;font-size:11.5px;font-weight:700;color:var(--g7);background:var(--tint);border-radius:999px;padding:2px 8px;justify-self:start}
+.mats p{font-size:15px;font-weight:700;line-height:1.45;word-break:keep-all}
+.mats blockquote{grid-column:1/-1;font-size:13px;line-height:1.55;color:#4a5553;border-left:2px solid var(--g5);padding:2px 0 2px 10px;word-break:keep-all}
+.mats img{width:84px;height:84px;object-fit:contain;grid-row:2/3;grid-column:2}
+.art b{font-size:19px;font-weight:800;color:var(--g9)}
+.art span{font-size:14px;font-weight:600;color:#4a5553;margin-left:6px}
+.sh-body p{font-size:14px;line-height:1.65;word-break:keep-all;margin-top:6px}
+.others{color:#6b7674;font-size:13px !important}
+.gest{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:14px;line-height:1.5}
+.gest dt{font-weight:800;color:var(--g7);white-space:nowrap}
+.gest dd{word-break:keep-all}
+.src p{font-size:12.5px;color:#5b6664}
+.nogl .hint,.nogl #ghost{display:none}
+.nogl-msg{display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;font-size:14px;color:var(--g7);background:#fff;border:1px solid var(--line);padding:10px 14px;border-radius:10px;text-align:center}
+.nogl .nogl-msg{display:block}
+@media (max-width:760px){
+ :root{--pad:16px}
+ .top{padding-top:14px}
+ .brand img{height:17px}
+ .brand .name{display:none}
+ .tag{font-size:11px;padding:2px 8px}
+ .meter{font-size:11px}
+ .meter b{font-size:20px}
+ .bottom{flex-direction:column;align-items:stretch;gap:10px;padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+ .rx{font-size:13.5px;line-height:1.55;max-width:none}
+ .btns{justify-content:space-between}
+ .open,#fresh{height:42px;font-size:14px}
+ .note{width:172px;padding:8px 10px 9px}
+ .note h4{font-size:14.5px}
+ .note p{font-size:11.5px}
+ .note small{display:none}
+ .sheet{top:auto;bottom:0;width:100%;height:86svh;border-left:0;border-top:1px solid var(--line);border-radius:16px 16px 0 0;transform:translateY(104%);box-shadow:0 -18px 50px rgba(0,40,34,.12)}
+ .sh-head{padding:16px 18px 12px}
+ .sh-body{padding:4px 18px 28px}
+}
+@media (prefers-reduced-motion:reduce){
+ .rx .w>span,.fade,.note,.sheet,#leaders line{transition-duration:.01s !important}
+ .hint::before{animation:none}
+}
+</style>
+</head>
+<body>
+<canvas id="scene" aria-label="종이 아래 타이어 옆면을 문질러 뜨는 화면"></canvas>
+<svg id="leaders" aria-hidden="true"></svg>
+<div id="notes" aria-live="polite">
+ <div class="note" data-k="size"><h4>235/60R18</h4><p>폭 235mm · 옆면 높이 60% · R 레이디얼 · 18인치 휠</p><small>이 숫자가 ‘내 차에 맞는 타이어’ 검색어</small></div>
+ <div class="note" data-k="dot"><h4>DOT 4026<i>예시</i></h4><p>끝 네 자리가 생산 주차 — 2026년 40번째&nbsp;주</p><small>생산 주차 안내 · 123 ONLY</small></div>
+ <div class="note" data-k="tread"><h4>트레드</h4><p>블록과 홈이 길을 붙잡고 물을 뺍니다</p><small>길이가 다른 블록 66개 — 소리를 흩뜨리는 배열</small></div>
+</div>
+<header class="top">
+ <div class="brand fade"><img src="logo.png" alt="123TIRE" width="179" height="36"><span class="name">123타이어</span><span class="tag">예술 처방 시제품</span></div>
+ <div class="meter fade" aria-live="off"><span class="k">드러난 각인</span><b id="pct">0</b><span class="u">%</span></div>
+</header>
+<div id="hint" class="hint">문질러 보세요</div>
+<div id="ghost"></div>
+<footer class="bottom">
+ <p class="rx" id="rxline">123타이어는 고무에 새겨진 숫자까지 알려 주는 곳입니다. <em>막스 에른스트의 프로타주(1925)</em>처럼, 종이를 문지르면 타이어 옆면의 <em>사이즈</em>와 <em>생산 주차</em>가 떠오릅니다.</p>
+ <div class="btns fade"><button id="fresh" type="button"><span>새 종이</span></button><button id="open" class="open" type="button" aria-controls="sheet"><span>처방전</span></button></div>
+</footer>
+<div class="nogl-msg">이 기기에서는 그래픽 가속이 꺼져 있어 문지르기를 보여 드릴 수 없습니다.</div>
+<div class="scrim" id="scrim"></div>
+<aside id="sheet" class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" aria-hidden="true">
+ <div class="sh-head"><h2 id="sheetTitle">처방전<small>123타이어 · 예술 처방</small></h2><button id="close" type="button" aria-label="닫기">×</button></div>
+ <div class="sh-body">
+  <section>
+   <h3>재료 3</h3>
+   <ol class="mats">
+    <li><span class="kind">물성</span><p>단단한 고무에 홈과 숫자가 돋을새김된 물건</p><img src="kl33.webp" alt="크루젠 프리미엄 KL33 제품 사진" width="600" height="600" loading="lazy"><blockquote>“크루젠 프리미엄 KL33 235/60R18 SUV에 고급세단의 정숙성과 승차감을 실현시키는 타이어” · “올웨더 타이어 특유의 단단함과 안정감이 확실히 느껴집니다.”</blockquote></li>
+    <li><span class="kind">과정</span><p>옆면을 들여다보고 사이즈를 읽어 검색하고, 장착점에서 손으로 꼼꼼히 점검</p><blockquote>“타이어사이즈 확인법 — 내 차에 맞는 타이어” · “사이즈를 입력하여 타이어 검색하기” · “기존 타이어 탈거부터 새 타이어 장착, 휠 밸런스 점검까지 꼼꼼하게 진행해 주시는 모습에 신뢰가 갔습니다.”</blockquote></li>
+    <li><span class="kind">이야기·숫자</span><p>고무에 찍힌 생산 주차까지 미리 알려 주는 곳</p><blockquote>“123타이어에서 교체해야 하는 이유! … 생산 주차 안내 · 123 ONLY” (메인 배너) · “최신 제품으로 4개 모두 같은 생산주수로 배송” (고객후기)</blockquote></li>
+   </ol>
+  </section>
+  <section>
+   <h3>고른 예술</h3>
+   <p class="art"><b>프로타주</b><span>막스 에른스트, 1925</span></p>
+   <p>마룻바닥 나뭇결 위에 종이를 대고 연필로 문질러 숨은 무늬를 옮긴 기법입니다. 이듬해 판화집 『박물지』로 묶였습니다. 타이어 옆면의 사이즈와 생산 주차도 고무에 돋을새김된 무늬라서, 종이를 대고 문지르면 그대로 떠오릅니다.</p>
+   <p class="others">다른 후보 — 타이어 자국 판화(라우센버그·케이지, 1953) · 페나키스티스코프(1830년대)</p>
+  </section>
+  <section>
+   <h3>손짓</h3>
+   <dl class="gest">
+    <dt>스치기</dt><dd>낮은 빛이 손을 따라가며 종이 아래 각인이 비치고, 흑연이 아주 살짝 묻습니다</dd>
+    <dt>문지르기</dt><dd>돋을새김 위에만 흑연이 묻어 숫자가 떠오릅니다 — 손이 간 방향대로 결이 남습니다</dd>
+    <dt>세게</dt><dd>결이 넓고 진해지고, 종이가 밀렸다 돌아오고, 흑연 가루가 튑니다</dd>
+    <dt>누르기</dt><dd>종이가 눌려 각인이 오목하게 비치고 그 자리가 점점 진해집니다</dd>
+    <dt>두드리기</dt><dd>탁본 방망이처럼 톡 — 둥근 자국이 찍힙니다</dd>
+    <dt>놓기</dt><dd>숫자가 드러났으면 읽는 법 꼬리표가 붙습니다</dd>
+    <dt>가만히</dt><dd>빛이 천천히 돌며 각인과 흑연이 반짝이고, 잠시 뒤 보이지 않는 손이 한 번 문질러 줍니다</dd>
+   </dl>
+  </section>
+  <section class="src">
+   <h3>출처</h3>
+   <p>로고·제품 사진(크루젠 프리미엄 KL33 · 235/60R18): 123tire.co.kr — 고객 자료. 문장은 123tire.co.kr 메인 화면·고객후기에서 그대로 옮겼습니다. 타이어 옆면·트레드·휠은 235/60R18 실제 치수 비율(림 지름 18인치 ÷ 전체 지름)로 직접 작도했습니다. 각인 ‘DOT 4026’은 읽는 법을 보여 주는 예시입니다.</p>
+  </section>
+ </div>
+</aside>
+<div id="cursor"><i class="ring"></i><i class="dot"></i><em class="lab">문지르기</em></div>
+<script src="main.js"></script>
+</body>
+</html>

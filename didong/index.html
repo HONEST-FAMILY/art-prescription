@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>서울디지털동행플라자 — 예술 처방 시제품 · 칼더의 모빌</title>
+<meta name="theme-color" content="#fffdf6">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23fffdf6'/%3E%3Ccircle cx='10' cy='11' r='7' fill='%230084ff'/%3E%3Ccircle cx='22.5' cy='10' r='5.5' fill='%23ee0093'/%3E%3Ccircle cx='15' cy='23.5' r='6' fill='%23ffb000'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none;background:#fffdf6}
+body{font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:#202020;-webkit-font-smoothing:antialiased;word-break:keep-all;-webkit-text-size-adjust:100%}
+#stage{position:fixed;left:0;top:0;display:block;touch-action:none;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+header{position:fixed;left:0;right:0;top:0;display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;padding:calc(18px + env(safe-area-inset-top)) 24px 0;pointer-events:none;z-index:5}
+header h1{line-height:0}
+header img{height:36px;width:auto;display:block}
+.tag{pointer-events:auto;font-size:15px;font-weight:700;color:#00277e;border:1.5px solid #00277e;border-radius:999px;padding:5px 13px;line-height:1.2;background:#fffdf6}
+.read{margin-left:auto;font-size:18px;font-weight:700;color:#00277e;font-variant-numeric:tabular-nums;display:flex;gap:8px;align-items:center;background:rgba(255,253,246,.94);border-radius:8px;padding:3px 8px}
+.read .bar{display:inline-block;width:64px;height:6px;border-radius:3px;background:rgba(0,39,126,.14);overflow:hidden;position:relative}
+.read .bar i{position:absolute;left:0;top:0;bottom:0;width:100%;background:#00277e;transform-origin:left center}
+footer{position:fixed;left:0;right:0;bottom:0;padding:0 24px calc(20px + env(safe-area-inset-bottom));pointer-events:none;z-index:5}
+.rx-line{font-size:clamp(21px,1.1vw + 14px,30px);font-weight:800;line-height:1.38;letter-spacing:-0.01em;max-width:26em;color:#161616}
+.rx-sub{margin-top:6px;font-size:clamp(16px,.45vw + 13px,19px);line-height:1.5;color:#474747;max-width:44em}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+.hint{font-size:17px;font-weight:700;color:#00277e}
+#rxBtn{pointer-events:auto;display:inline-flex;border:0;background:#00277e;color:#fff;border-radius:999px;cursor:pointer;font:inherit;padding:0;will-change:transform}
+#rxBtn span{display:inline-flex;align-items:center;gap:12px;padding:10px 10px 10px 24px;font-size:19px;font-weight:800;min-height:56px;will-change:transform}
+#rxBtn i{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#fff;color:#00277e;font-style:normal;font-weight:800;font-size:18px}
+#rxBtn:focus-visible,.close:focus-visible{outline:3px solid #ffb000;outline-offset:3px}
+#toast{position:fixed;left:0;right:0;margin:0 auto;width:max-content;top:calc(104px + env(safe-area-inset-top));transform:translateY(-8px);background:#00277e;color:#fff;font-size:17px;font-weight:700;padding:10px 20px;border-radius:999px;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:6;max-width:calc(100vw - 32px);text-align:center;line-height:1.4}
+#toast.on{opacity:1;transform:none}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.1em;margin-bottom:-.1em}
+.c{display:inline-block;transform:translateY(112%);transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.in .c{transform:none}
+.wrap{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:20}
+.back{position:absolute;inset:0;background:rgba(0,39,126,.16);opacity:0;transition:opacity .4s}
+.sheet{position:absolute;top:0;right:0;bottom:0;width:min(470px,100%);background:#fff;border-left:1px solid #e3e3e3;transform:translateX(104%);transition:transform .55s cubic-bezier(.16,1,.3,1),visibility 0s linear .55s;visibility:hidden;overflow-y:auto;overscroll-behavior:contain;padding:26px 28px 44px;pointer-events:auto;touch-action:pan-y}
+.wrap.open{pointer-events:auto}
+.wrap.open .back{opacity:1}
+.wrap.open .sheet{transform:none;visibility:visible;transition:transform .55s cubic-bezier(.16,1,.3,1),visibility 0s}
+.sheet .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sheet h2{font-size:27px;font-weight:800;color:#161616}
+.close{font:inherit;font-size:17px;font-weight:700;color:#00277e;background:#fff;border:1.5px solid #00277e;border-radius:999px;min-height:46px;padding:0 18px;cursor:pointer}
+.sheet h3{margin-top:26px;font-size:18px;font-weight:800;color:#00277e}
+.sheet .lead{margin-top:8px;font-size:17px;line-height:1.6;color:#333}
+.mat{margin-top:12px;padding:12px 14px 12px 16px;background:#fffdf6;border-left:5px solid #0084ff}
+.mat b{display:block;font-size:15px;color:#00277e}
+.mat p{margin-top:4px;font-size:17px;line-height:1.55;color:#202020}
+.mat q{display:block;margin-top:6px;font-size:16px;line-height:1.55;color:#444;quotes:"「" "」"}
+.mat small{display:block;margin-top:4px;font-size:14px;color:#777}
+.ges{margin-top:10px;list-style:none}
+.ges li{display:grid;grid-template-columns:7.2em 1fr;gap:10px;padding:11px 0;border-top:1px solid #ececec;font-size:17px;line-height:1.5}
+.ges li b{color:#00277e}
+.src{margin-top:24px;font-size:14px;line-height:1.6;color:#777}
+#cur,#ring{position:fixed;left:0;top:0;pointer-events:none;z-index:30;opacity:0;transition:opacity .25s}
+html.fine #cur.on,html.fine #ring.on{opacity:1}
+html.fine #stage{cursor:none}
+#cur{width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#00277e}
+#ring{width:0;height:0}
+#ring .o{position:absolute;left:-28px;top:-28px;width:56px;height:56px;border:1.5px solid rgba(0,39,126,.6);border-radius:50%}
+#ring b{position:absolute;left:0;top:36px;transform:translateX(-50%);white-space:nowrap;font-size:14px;font-weight:700;color:#00277e;background:rgba(255,253,246,.92);padding:2px 8px;border-radius:6px}
+noscript p{position:fixed;left:24px;right:24px;top:45%;font-size:20px;line-height:1.5;color:#00277e}
+@media (max-width:640px){
+ header{padding:calc(14px + env(safe-area-inset-top)) 16px 0;gap:8px 10px}
+ header img{height:28px}
+ .tag{font-size:14px;padding:4px 11px}
+ .read{font-size:16px;margin-left:auto}
+ .read .bar{width:48px}
+ footer{padding:0 16px calc(14px + env(safe-area-inset-bottom))}
+ .rx-sub{font-size:15.5px}
+ .row{margin-top:10px}
+ .hint{font-size:15.5px}
+ #rxBtn span{font-size:18px;min-height:52px;padding:8px 8px 8px 20px}
+ #toast{top:calc(96px + env(safe-area-inset-top));font-size:16px}
+ .sheet{top:auto;left:0;width:100%;max-height:84svh;border-left:0;border-top:1px solid #e3e3e3;border-radius:18px 18px 0 0;transform:translateY(104%);padding:22px 20px 36px}
+ .ges li{grid-template-columns:6.4em 1fr;font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){.c{transform:none;transition:none}.sheet,.back{transition:none}}
+</style>
+</head>
+<body>
+<canvas id="stage" role="img" aria-label="다섯 센터 색 원판이 매달린 모빌. 원판을 톡 건드리면 흔들리다가 천천히 다시 균형을 찾습니다."></canvas>
+<header>
+ <h1><img src="logo-c.png" alt="서울디지털동행플라자" width="552" height="80"></h1>
+ <span class="tag">예술 처방 시제품</span>
+ <p class="read"><span id="level">수평 100%</span><span class="bar" aria-hidden="true"><i id="levelBar"></i></span><span aria-hidden="true">·</span><span id="count">원판 5개</span></p>
+</header>
+<div id="toast" role="status" aria-live="polite"></div>
+<footer>
+ <p class="rx-line" id="rxLine">가벼운 원판에 더 긴 팔을 내어 주면, 모두가 함께 수평을 이룹니다</p>
+ <p class="rx-sub" id="rxSub">‘약자와의 동행’을 칼더의 모빌처럼 — 톡 건드려도, 세게 쳐도 아무것도 떨어지지 않아요</p>
+ <div class="row"><p class="hint">톡 · 쓸기 · 끌기 · 길게 누르기</p><button id="rxBtn" type="button" aria-haspopup="dialog" aria-controls="sheet" aria-expanded="false"><span>처방전<i aria-hidden="true">→</i></span></button></div>
+</footer>
+<div class="wrap" id="wrap">
+ <div class="back" id="back"></div>
+ <aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="top"><h2 id="sheetTitle">처방전</h2><button class="close" id="close" type="button">닫기 ✕</button></div>
+  <p class="lead">서울디지털동행플라자 홈페이지에서 재료 세 가지를 그대로 옮기고, 그 재료와 같은 원리로 움직이는 예술을 골랐습니다.</p>
+  <h3>재료 세 가지 — 홈페이지 문장 그대로</h3>
+  <div class="mat" style="border-left-color:#0084ff"><b>무게</b><p>무겁게 느껴지는 AI·디지털을 가볍게 덜어 주는 곳</p><q>다양한 AI·디지털 기기를 쉽고 재미있게 체험하며 건강 · 문화 ·여가 ·취미 활동을 통해 AI·디지털에 대한 부담을 낮춥니다.</q><small>센터 소개 (didong.kr/about) · 색은 홈 첫 화면 다섯 센터 버튼과 로고</small></div>
+  <div class="mat" style="border-left-color:#06bf00"><b>손짓</b><p>기초교육 첫 손짓은 화면을 ‘톡’ 건드리는 것 — 각자 속도대로</p><q>전원 켜기·끄기, 터치 조작, 타이핑하기, 화면 밝기·글자 크기 조절, 와이파이 연결 등</q><small>프로그램 소개 · 기초교육 ‘스마트기기 기본조작’ (홈 소개 영상 ‘천천히 해도 괜찮아요!’)</small></div>
+  <div class="mat" style="border-left-color:#ee0093"><b>이야기</b><p>‘약자와의 동행’에서 시작해 다섯 센터가 서로 기대어 함께 가는 곳</p><q>서울디지털동행플라자는 서울시 ‘약자와의 동행＇공약으로 시작되었습니다.</q><small>센터 소개 (didong.kr/about)</small></div>
+  <h3>고른 예술 — 키네틱 모빌</h3>
+  <p class="lead">알렉산더 칼더, 1930년대~. 모빌은 가벼운 조각에 더 긴 팔을 내어 줘서 무거운 조각과 수평을 맞춥니다(무게 × 팔 길이가 양쪽 같음). 칼더 작품의 모양은 쓰지 않고 이 원리만 빌렸습니다 — 원판은 로고의 동그라미와 다섯 센터 색입니다. 화면 속 모빌은 매 순간 무게 균형, 흔들림, 수평 회전을 계산해 움직입니다.</p>
+  <h3>손짓</h3>
+  <ul class="ges">
+   <li><b>톡 건드리기</b><span>원판이 빙글 돌고, 흔들림이 위 막대까지 전해졌다가 천천히 멈춰요</span></li>
+   <li><b>쓸기(입김)</b><span>손이 지나간 쪽으로 바람이 불어 원판이 비스듬히 돌아요</span></li>
+   <li><b>끌어 당기기</b><span>원판을 당기면 그쪽 막대가 기울고, 놓으면 출렁이며 제자리로 와요</span></li>
+   <li><b>세게 휘두르기</b><span>크게 돌아도 아무것도 떨어지거나 엉키지 않아요</span></li>
+   <li><b>길게 누르기</b><span>새 원판(교육·체험·상담…)이 매달리고, 매달린 점이 미끄러지며 다시 수평을 찾아요</span></li>
+   <li><b>가만히 두기</b><span>아주 약한 바람에 천천히 돌고, 벽에 그림자가 따라 움직여요</span></li>
+  </ul>
+  <p class="src">색·로고·문장: 서울디지털동행플라자 홈페이지(didong.kr) · 글꼴: Pretendard · 원판·막대·줄은 코드로 계산한 도형</p>
+ </aside>
+</div>
+<div id="cur" aria-hidden="true"></div>
+<div id="ring" aria-hidden="true"><div class="o"></div><b>입김</b></div>
+<noscript><p>가벼운 원판에 더 긴 팔을 내어 주면, 모두가 함께 수평을 이룹니다 — 이 화면은 자바스크립트가 켜져 있어야 움직입니다.</p></noscript>
+<script src="main.js"></script>
+</body>
+</html>
