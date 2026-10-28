@@ -53,7 +53,7 @@
   }
   function mkDisc(label, color, r, wire) {
     const n = base('disc');
-    Object.assign(n, { label, color, back: mix(color, NAVY, 0.32), edge: mix(color, NAVY, 0.55), ink: INK[color], r, wire0: wire, wire, grow: reduce ? 1 : 0, mgrow: 1, added: false, born: 0, flash: 0, T: { x: 0, y: 0, z: 0 }, C: { x: 0, y: 0, z: 0 }, sx: -9999, sy: -9999, sr: 0, order: discs.length });
+    Object.assign(n, { label, color, back: mix(color, '#000000', 0.16), edge: mix(color, '#000000', 0.34), ink: INK[color], r, wire0: wire, wire, grow: reduce ? 1 : 0, mgrow: 1, added: false, born: 0, flash: 0, T: { x: 0, y: 0, z: 0 }, C: { x: 0, y: 0, z: 0 }, sx: -9999, sy: -9999, sr: 0, order: discs.length });
     discs.push(n); nodes.push(n);
     return n;
   }
@@ -535,7 +535,8 @@
   const go = () => { introGo = true; };
   addEventListener('load', go);
   if (document.readyState === 'complete') go();
-  setTimeout(go, 1200);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(go, go);
+  setTimeout(go, 2000);
   function intro(now) {
     if (!introGo) { dropPx = -H * 0.75; return; }
     if (introStart === null) introStart = now;
