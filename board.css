@@ -184,6 +184,9 @@ a.shot:hover .go { transform: translateX(4px); }
 .cands li b { font-weight: 700; }
 .cands li small { display: block; font-size: 13px; color: var(--ink-3); margin-top: 2px; }
 
+.ai { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px; padding: 56px 0; border-bottom: 1px solid var(--line); align-items: center; }
+.ai h3 { margin: 0; font-size: clamp(24px, 2.4vw, 34px); letter-spacing: -0.035em; }
+
 .catalog { padding: 96px 0 40px; }
 .cat-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 64px; align-items: end; }
 .cat-head h2 { margin: 0; font-size: clamp(28px, 3.2vw, 44px); letter-spacing: -0.04em; }
@@ -233,6 +236,7 @@ a.shot:hover .go { transform: translateX(4px); }
   .steps li { padding: 14px 0 14px 22px; border-left: 1px solid var(--line-2); }
   .steps li::before { left: -4px; top: 20px; }
   .case { grid-template-columns: 1fr; gap: 22px; padding: 40px 0; }
+  .ai { grid-template-columns: 1fr; gap: 22px; padding: 40px 0; }
   .cat-head { grid-template-columns: 1fr; }
   .cat-grid { grid-template-columns: 1fr; }
   .mats li { grid-template-columns: 1fr; gap: 2px; }

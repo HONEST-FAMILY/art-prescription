@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>라이트박스 앞의 애니메이터 · AI가 그린 부품, 코드가 만든 움직임</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f6f4ef'/%3E%3Cpath d='M7 25 L22 6 L26 10 L11 28 L6 29 Z' fill='%232b5fd9' stroke='%231f1d1a' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--paper:#f6f4ef;--ink:#1f1d1a;--soft:#6c675f;--blue:#2b5fd9}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);font-family:"Pretendard Variable",Pretendard,system-ui,-apple-system,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased}
+#app{position:fixed;inset:0;overflow:hidden}
+#panel{position:absolute;left:20px;right:20px;top:20px;bottom:86px;border:3px solid var(--ink);background:#ece4d6;overflow:hidden;perspective:3000px;perspective-origin:42% 45%;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+#panel.grab{cursor:grabbing}
+#scene{position:absolute;left:0;top:0;width:2586px;height:1390px;transform-origin:0 0}
+#scene.d3{transform-style:preserve-3d}
+#scene>*{position:absolute;left:0;top:0;transform-origin:0 0;pointer-events:none;user-select:none;-webkit-user-drag:none;backface-visibility:visible}
+#scene img{display:block;outline:3px dashed transparent;outline-offset:0;transition:outline-color .5s}
+#scene.d3 img{outline-color:rgba(31,29,26,.28)}
+#scene .anc{width:2px;height:2px}
+#fx{overflow:visible}
+#callouts{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+#labels{position:absolute;inset:0;pointer-events:none}
+.lb{position:absolute;left:0;top:0;white-space:nowrap;font-size:13px;line-height:1.25;letter-spacing:-.01em;background:var(--paper);border:1.5px solid var(--ink);padding:4px 8px 5px;opacity:0;will-change:transform,opacity}
+.lb em{font-style:normal;color:var(--soft);font-weight:500}
+.lb strong{font-weight:700}
+.lb.code{border-color:var(--blue);color:var(--blue)}
+.lb.code em{color:var(--blue)}
+#bar{position:absolute;left:20px;right:20px;bottom:0;height:86px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.lead{margin:0;font-size:17px;font-weight:650;letter-spacing:-.015em;line-height:1.4}
+.lead b{color:var(--blue);font-weight:700}
+.meta{margin:5px 0 0;font-size:12.5px;color:var(--soft);letter-spacing:-.005em;line-height:1.45}
+#explode{flex:none;font:inherit;font-size:15px;font-weight:650;padding:12px 22px;border:2px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:0;cursor:pointer;letter-spacing:-.01em;transition:background .25s,color .25s}
+#explode:hover{background:#ebe6dc}
+#explode[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+#explode:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+@media (max-width:720px),(max-aspect-ratio:4/5){
+#panel{left:12px;right:12px;top:12px;bottom:auto;height:min(60svh,calc((100vw - 24px)*1.32))}
+#bar{left:14px;right:14px;top:calc(12px + min(60svh,calc((100vw - 24px)*1.32)) + 14px);bottom:auto;height:auto;flex-direction:column;align-items:stretch;gap:14px}
+.lead{font-size:16px}
+.meta{font-size:12px}
+#explode{width:100%;padding:13px 16px}
+.lb{font-size:10.5px;padding:3px 6px 4px}
+}
+</style>
+</head>
+<body>
+<main id="app">
+<section id="panel" aria-label="라이트박스 앞에서 원화를 그리는 너구리 애니메이터. 누르면 반응하고, 끌면 종이가 넘어갑니다.">
+<div id="scene"></div>
+<svg id="callouts" aria-hidden="true"></svg>
+<div id="labels" aria-hidden="true"></div>
+</section>
+<footer id="bar">
+<div>
+<p class="lead">그림 10장은 AI가 부품으로 나눠 그렸고, 움직임은 <b>코드가 매 순간</b> 계산합니다.</p>
+<p class="meta">AI 이미지 생성 15회 · 쓴 그림 10장 · gemini-3-pro-image, gemini-3.1-flash-image<br>너구리 누르기 · 종이 끌어 넘기기 · 길게 누르기 · 마우스나 폰 기울기로 입체</p>
+</div>
+<button id="explode" type="button" aria-pressed="false">부품 보기</button>
+</footer>
+</main>
+<script src="main.js"></script>
+</body>
+</html>
